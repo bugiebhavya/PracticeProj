@@ -1,6 +1,5 @@
 from django import forms
 from .models import (Event,
-    Sponsor,
     EventDetail)
 from django.forms.models import BaseInlineFormSet, inlineformset_factory
 
@@ -19,16 +18,11 @@ class EventForm(forms.ModelForm):
                 }
 
 
-class SponsorForm(forms.ModelForm):
-    
-    class Meta:
-        model = Sponsor
-        fields = ("company","person_in_contact","event")
 
 class EventDetailForm(forms.ModelForm):
     
     class Meta:
         model = EventDetail
-        fields = ("event","sponsor","time","description")
+        fields = ("event","time","description")
 
 EventDetailFormSet = inlineformset_factory(Event,EventDetail,extra=1,min_num=2,form = EventDetailForm, can_delete = True)

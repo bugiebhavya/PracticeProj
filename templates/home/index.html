@@ -1,3 +1,6 @@
+{% extends 'home/base.html' %}
+{% load static %} 
+{% load crispy_forms_tags %}
 <!doctype>
 <html>
 <head>
@@ -7,14 +10,25 @@ Hello
 
 </head>
 <body>
+{% block content %}
+HOME
+{% if user.is_authenticated %}
+Logged in as {{request.user.username}}
+<a href="/logout">logout</a>
+<br><br>
 <h1>Ready</h1>
-<form method="POST">
+<form method="POST" class=''>
 {% csrf_token %}
-{{ event_form.as_p }}
+{{ event_form|crispy}}
+{{ detail_form|crispy}}
 <input type="submit" value="Submit">
 </form>
-{{ form_errors }}
+{{ form_errors }}{% else %}
+Login <a href="/login">Here</a> if already a user! Or <a href="/register">Signup Now</a>
+{% endif %} 
 
+
+{% endblock %}
 </body>
 
 </html>
